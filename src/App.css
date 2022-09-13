@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cookie&family=Fredericka+the+Great&family=Libre+Bodoni:ital@1&family=Montserrat:wght@200&family=Mukta:wght@200;300&family=Oleo+Script+Swash+Caps:wght@700&family=Permanent+Marker&family=Playfair+Display+SC&family=Roboto+Slab&family=Roboto:wght@300&family=Rubik+Wet+Paint&family=Satisfy&family=Shadows+Into+Light&family=Tapestry&family=Tiro+Gurmukhi&display=swap');
+
+body{
+  font-family: 'Libre Baskerville', serif;
+}
+
+*{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  font-size:16px;
+}
+
+
+a{
+  text-decoration: none;
+}
+
+.rick-morty{
+  font-family: 'Fredericka the Great', cursive;
+  color:aqua;
+}
+
+.character-contain{
+  display: flex;
+  flex-wrap: wrap;
+  gap:2rem;
+}
+
+.z-index-1{
+  z-index: 1;
+}
+.z-index-2{
+  z-index: 2;
+}
+
+
+@media (max-width: 508px) {
+  .srch-container{
+    width:21rem !important;
+  }
+}
+
+@media (max-width: 366px) {
+  .srch-container{
+    width:16rem !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .filter-responsive{
+    display:flex;
+    flex-direction: column;
+    }
+}
