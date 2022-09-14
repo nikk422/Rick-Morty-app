@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Search from "./Search";
 import { useDispatch, useSelector } from "react-redux";
 import { addToFavorite, removeToFavorite, FetchData } from "../Slice/DataSlice";
 import { useEffect } from "react";
@@ -9,11 +8,9 @@ const CharacterListing = ({ prop }) => {
 
   const {
     data: { results },
-    byGender,
     favouritList,
     loading,
-    byStatus,
-    bySearch,
+  
   } = useSelector((state) => state.chardata);
 
     // --------For Calling Data with useEffect------------
@@ -25,32 +22,17 @@ const CharacterListing = ({ prop }) => {
 
   const newData = prop !== undefined ? prop : results;
 
-  // --------For filter function------------
-
-  const filterFunc = () => {
-    let sortData = newData;
-
-    if (byStatus) {
-      sortData = sortData?.filter((i) => byStatus.includes(i.status));
-    }
-    if (byGender) {
-      sortData = sortData?.filter((i) => byGender.includes(i.gender));
-    }
-    return sortData;
-  };
+  
 
   return (
     <>
-      <main className="d-flex flex-column container z-index-1">
-        <Search />
+      <main className="d-flex flex-column container mt-4 z-index-1">
         {loading ? (
           <h2 className="text-center">Loading...</h2>
         ) : (
           <div className="character-contain d-flex flex-row justify-content-center">
-            {filterFunc().map((item) => {
+            {newData.map((item) => {
               let updatedTime = item.created.replace("T", "/").slice(0, 19);
-
-              if (item.name.toLowerCase().includes(bySearch.toLowerCase())) {
                 return (
                   <div
                     className="card"
@@ -107,7 +89,6 @@ const CharacterListing = ({ prop }) => {
                     </div>
                   </div>
                 );
-              }
             })}
           </div>
         )}

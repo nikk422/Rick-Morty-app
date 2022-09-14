@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchData } from "../Slice/DataSlice";
 
-const Pagination = () => {
+const Pagination = ({props}) => {
+
   const dispatch = useDispatch();
-  const [pageNo, setPageNo] = useState(1);
+  const {pageNo, setPageNo} = props;
   const {data:{info}}= useSelector((state) => state.chardata);
 
 
@@ -12,7 +13,7 @@ const Pagination = () => {
 
   useEffect(() => {
     if(info?.pages <= 42){
-      dispatch(FetchData(pageNo));
+      dispatch(FetchData(`page=${pageNo}`));
     }
   }, [pageNo]);
 

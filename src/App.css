@@ -37,16 +37,23 @@ a{
   z-index: 2;
 }
 
+.filter-sticky{
+  position: sticky;
+  top:6.5rem;
+  z-index: 2;
+  background-color:rgb(188, 202, 202);
+}
 
-@media (max-width: 508px) {
+
+@media (max-width: 545px) {
   .srch-container{
-    width:21rem !important;
+    width:18rem !important;
   }
 }
 
-@media (max-width: 366px) {
+@media (max-width: 375px) {
   .srch-container{
-    width:16rem !important;
+    width:15rem !important;
   }
 }
 
@@ -54,5 +61,6 @@ a{
   .filter-responsive{
     display:flex;
     flex-direction: column;
+  
     }
 }

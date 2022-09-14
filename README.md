@@ -11,7 +11,7 @@
 - Home Page
 - Single Character Detail Page
 - Favorite List Page
-- Header-Page
+- Header-Page  
 
 ## Tech Stack
 - React.JS

@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { statusFilter, genderFilter, clearFilter } from "../Slice/DataSlice";
+import { useDispatch } from "react-redux";
+import {  FetchData } from "../Slice/DataSlice";
 
-const FilterCharacter = () => {
+
+const FilterCharacter = ({pageNo}) => {
   const statusArr = ["Alive", "Dead", "unknown"];
   const genderArr = ["Male", "Female", "unknown"];
   const [showFilter, SetShowFilter] = useState(false);
+  const [category,setCategory] = useState({byStatus:"",byGender:""});
   const dispatch = useDispatch();
-  const { byStatus, byGender } = useSelector((state) => state.chardata);
 
 
   return (
     <div
-      className="border p-2   bg-dark bg-opacity-10"
+      className="border p-1 m-1  filter-sticky"
       style={{ height: "fit-content" }}
     >
       <button
@@ -30,8 +31,10 @@ const FilterCharacter = () => {
                 type="radio"
                 name="status"
                 value={char}
-                checked={char === byStatus}
-                onClick={() => dispatch(statusFilter(char))}
+                checked={char === category.byStatus}
+                onClick={() => {
+                  setCategory({...category,byStatus: char})
+                  dispatch(FetchData(`page=${pageNo}&status=${char}&gender=${category.byGender}`))}}
               ></input>
               <label className="lable"> {char}</label>
             </div>
@@ -45,14 +48,18 @@ const FilterCharacter = () => {
                 type="radio"
                 name="gender"
                 value={char}
-                checked={char === byGender}
-                onClick={() => dispatch(genderFilter(char))}
+                checked={char === category.byGender}
+                onClick={() => {
+                  setCategory({...category,byGender: char})
+                  dispatch(FetchData(`page=${pageNo}&gender=${char}&status=${category.byStatus}`))}}
               ></input>
               <label className="lable"> {char}</label>
             </div>
           ))}
           <button
-            onClick={() => dispatch(clearFilter())}
+            onClick={() => {
+              setCategory({byGender:"" ,byStatus:""})
+              dispatch(FetchData(`page=${pageNo}`))}}
             className="btn btn-secondary btn-sm"
           >
             Clear-Filter

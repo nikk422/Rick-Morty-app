@@ -5,16 +5,14 @@ import axios from "axios";
 const initialState = {
     loading: true,
     data:{results:[]},
-    favouritList: [],
-    byStatus: null,
-    byGender: null,
-    bySearch:''
+    favouritList: JSON.parse(localStorage.getItem('favouritList')) || [],
+    pageNo:null
 }
 
 
-export const FetchData= createAsyncThunk("data/FetchData", async (pageNo)=>{
+export const FetchData= createAsyncThunk("data/FetchData", async (APIData)=>{
     try {
-        const { data }= await axios.get(`https://rickandmortyapi.com/api/character/?page=${pageNo}`)
+        const { data }= await axios.get(`https://rickandmortyapi.com/api/character/?${APIData}`)
         return data
 
     } catch (error) {
@@ -28,24 +26,15 @@ const dataSlice=createSlice({
     initialState,
     reducers:{
         addToFavorite: (state,{payload}) => {
+            localStorage.removeItem("favouritList")
             state.favouritList.push(payload)
+            localStorage.setItem("favouritList",JSON.stringify(state.favouritList))
         },
         removeToFavorite: (state,{payload}) => {
+            localStorage.removeItem("favouritList")
             let remove= state.favouritList.filter((i)=>i.id !== payload.id)
             state.favouritList= remove
-        },
-        statusFilter: (state,{payload}) => {
-            state.byStatus= payload
-        },
-        genderFilter: (state,{payload}) => {
-            state.byGender= payload
-        },
-        clearFilter: (state) => {
-            state.byStatus=null
-            state.byGender=null 
-        },
-        searchFilter:(state,{payload}) => {
-            state.bySearch=payload;
+            localStorage.setItem("favouritList",JSON.stringify(remove))
         }
 
     },
@@ -65,4 +54,4 @@ const dataSlice=createSlice({
 
 export default dataSlice.reducer;
 
-export const {addToFavorite,removeToFavorite,statusFilter,genderFilter,clearFilter ,searchFilter } = dataSlice.actions
+export const {addToFavorite,removeToFavorite,statusFilter } = dataSlice.actions
