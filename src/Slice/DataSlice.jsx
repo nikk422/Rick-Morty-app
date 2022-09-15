@@ -6,7 +6,7 @@ const initialState = {
     loading: true,
     data:{results:[]},
     favouritList: JSON.parse(localStorage.getItem('favouritList')) || [],
-    pageNo:null
+    isError:false
 }
 
 
@@ -16,7 +16,7 @@ export const FetchData= createAsyncThunk("data/FetchData", async (APIData)=>{
         return data
 
     } catch (error) {
-        console.log(error)
+        throw error
     }
 })
 
@@ -40,13 +40,16 @@ const dataSlice=createSlice({
     },
     extraReducers:{
         [FetchData.pending]: (state)=>{
-            state.loading=true
+            state.loading=true;
+            state.isError = false;
         },
         [FetchData.fulfilled]:(state,{payload})=>{
             state.data=payload;
             state.loading=false;
+            state.isError = false;
         },
         [FetchData.rejected]:(state)=>{
+            state.isError = true;
             state.loading=false
         }
     }
